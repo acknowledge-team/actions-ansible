@@ -1,10 +1,6 @@
 name: "Acknowledge ansible actions"
 description: "Github actions used to run ansible playbook"
 inputs:
-  ansible_requirements:
-    description: "Define if you need to install ansible roles using requirements"
-    required: true
-    default: true
   ansible_requirements_file:
     description: "Path to ansible requirements file for roles installation"
     required: false
@@ -13,13 +9,9 @@ inputs:
     description: "Path to inventory file"
     required: true
     default: "inventory"
-  enable_limit:
-    description: "Define if limit is enabled"
-    required: true
-    default: false
   limit:
     description: "Define limit for ansible run"
-    required: false
+    required: true
 runs:
   using: "composite"
   steps:
@@ -29,10 +21,5 @@ runs:
       shell: bash
     - run: ansible-galaxy install -r ${{ inputs.ansible_requirements_file }} -f
       shell: bash
-      if: ${{ inputs.ansible_requirements }} == true
-    - run: ansible-playbook -i inventory ${{ inputs.inventory }}
-      shell: bash
-      if: ${{ enable_limit }} == false
     - run: ansible-playbook -i inventory ${{ inputs.inventory }} --limit ${{ inputs.limit }}
       shell: bash
-      if: ${{ enable_limit }} == true
