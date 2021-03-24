@@ -9,6 +9,10 @@ inputs:
     description: "Path to inventory file"
     required: true
     default: "inventory"
+  playbook_file:
+    description: "Path to playbook"
+    required: true
+    default: "site.yml"
   limit:
     description: "Define limit for ansible run"
     required: true
