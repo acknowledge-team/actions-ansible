@@ -15,12 +15,12 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - run: echo "~/.local/bin" >> $GITHUB_PATH 
+      shell: bash
     - run: |
         curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
         python3 get-pip.py
         pip install ansible hvac
-      shell: bash
-    - run: echo "~/.local/bin" >> $GITHUB_PATH 
       shell: bash
     - run: ansible-galaxy install -r ${{ inputs.ansible_requirements_file }} -f
       shell: bash
